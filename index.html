@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edu Local Agent</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⚡ Edu Local Agent</h1>
+    <p class="subtitle">Safe, consent-driven local actions for learning</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <button id="deviceInfoBtn">💻 Device Info</button>
+      <button id="locationBtn">📍 Save Location</button>
+      <button id="recordAudioBtn">🎤 Start/Stop Audio</button>
+      <button id="webcamBtn">📸 Capture Webcam</button>
+      <button id="deleteBtn">🗑️ Delete File/Folder</button>
+    </section>
+
+    <section class="preview">
+      <h2>📊 Output</h2>
+      <pre id="output">Click a button to perform an action...</pre>
+      <video id="liveVideo" autoplay></video>
+      <canvas id="photoCanvas"></canvas>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made with ❤️ for educational purposes</p>
+  </footer>
+
+  <!-- Renderer logic -->
+  <script src="renderer.js"></script>
+</body>
+</html>
