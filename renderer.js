@@ -8,24 +8,24 @@ document.getElementById("deviceInfoBtn").addEventListener("click", async () => {
 
 // Location Save
 document.getElementById("locationBtn").addEventListener("click", async () => {
-  const fakeLoc = { lat: 12.9716, lon: 77.5946 }; // demo coords
+  const fakeLoc = { lat: 12.9716, lon: 77.5946 };
   const res = await window.agent.saveLocation(fakeLoc);
   output.innerText = "📍 Location saved to " + res.file;
 });
 
-// Audio Recording
+// Audio Recording (MP4)
 let mediaRecorder, audioChunks = [];
 document.getElementById("recordAudioBtn").addEventListener("click", async () => {
   if (!mediaRecorder || mediaRecorder.state === "inactive") {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
     mediaRecorder.onstop = () => {
       const blob = new Blob(audioChunks, { type: 'audio/webm' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "recording.webm";
+      a.download = "recording.mp4";
       a.click();
       audioChunks = [];
     };
@@ -56,6 +56,44 @@ document.getElementById("webcamBtn").addEventListener("click", async () => {
     });
     output.innerText = "📸 Snapshot captured & saved.";
   }, 3000);
+});
+
+// Screenshot (HQ)
+document.getElementById("screenshotBtn").addEventListener("click", async () => {
+  const dataUrl = await window.agent.takeScreenshot();
+  const a = document.createElement("a");
+  a.href = dataUrl;
+  a.download = "screenshot.png";
+  a.click();
+  output.innerText = "📸 High-quality screenshot saved!";
+});
+
+// Screen Recording
+let screenRecorder, screenChunks = [];
+document.getElementById("screenRecordBtn").addEventListener("click", async () => {
+  if (!screenRecorder || screenRecorder.state === "inactive") {
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+      screenRecorder = new MediaRecorder(stream, { mimeType: "video/webm; codecs=vp9" });
+      screenRecorder.ondataavailable = e => screenChunks.push(e.data);
+      screenRecorder.onstop = () => {
+        const blob = new Blob(screenChunks, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "screen-recording.mp4";
+        a.click();
+        screenChunks = [];
+      };
+      screenRecorder.start();
+      output.innerText = "🎥 Screen recording started...";
+    } catch (err) {
+      output.innerText = "❌ Screen recording failed: " + err.message;
+    }
+  } else {
+    screenRecorder.stop();
+    output.innerText = "✅ Screen recording stopped & saved.";
+  }
 });
 
 // File Delete

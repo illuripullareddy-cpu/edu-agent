@@ -152,5 +152,26 @@
       "lat": 12.9716,
       "lon": 77.5946
     }
+  },
+  {
+    "timestamp": "2025-10-03T16:42:50.399Z",
+    "action": "device-info"
+  },
+  {
+    "timestamp": "2025-10-03T16:42:51.967Z",
+    "action": "location-saved",
+    "location": {
+      "lat": 12.9716,
+      "lon": 77.5946
+    }
+  },
+  {
+    "timestamp": "2025-10-03T16:43:16.357Z",
+    "action": "screenshot"
+  },
+  {
+    "timestamp": "2025-10-03T16:43:34.860Z",
+    "action": "delete",
+    "target": "C:\\Users\\User\\Downloads\\DVWA-master\\DVWA-master\\external"
   }
 ]

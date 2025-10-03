@@ -1,6 +1,6 @@
 {
   "name": "edu-local-agent",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Educational Electron app with safe local agent features",
   "main": "main.js",
   "scripts": {

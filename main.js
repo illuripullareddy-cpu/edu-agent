@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, desktopCapturer } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
@@ -94,4 +94,14 @@ ipcMain.handle("agent:deleteFile", async () => {
     appendLog({ action: "delete-failed", target, error: err.message });
     return { success: false, message: `Failed: ${err.message}` };
   }
+});
+
+// --- SCREENSHOT (HQ) ---
+ipcMain.handle("agent:takeScreenshot", async () => {
+  const sources = await desktopCapturer.getSources({
+    types: ["screen"],
+    thumbnailSize: { width: 1920, height: 1080 }
+  });
+  appendLog({ action: "screenshot" });
+  return sources[0].thumbnail.toDataURL();
 });
